@@ -4,3 +4,5 @@
 /pkg/
 /tmp/
 .idea/
+/spec/dummy/log
+
