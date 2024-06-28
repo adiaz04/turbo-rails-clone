@@ -5,4 +5,5 @@
 /tmp/
 .idea/
 /spec/dummy/log
+/spec/dummy/tmp
 
