@@ -70,10 +70,20 @@ Rails.application.configure do
 
   # Asset configuration
   config.asset_host = 'http://localhost:3000'
+  config.action_controller.asset_host = 'http://127.0.0.1:3000'
   config.assets.debug = true
   config.assets.compile = true
   config.assets.digest = true
 
   # Configure Importmap
   config.importmap.paths = [Rails.root.join("config/importmap.rb")]
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins 'localhost:3000' # Adjust this as needed
+      resource '*',
+               headers: :any,
+               methods: [:get, :post, :put, :patch, :delete, :options, :head],
+               credentials: true
+    end
+  end
 end

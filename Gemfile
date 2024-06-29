@@ -18,3 +18,7 @@ group :development, :test do
 end
 
 gem 'importmap-rails'
+
+gem "redis"
+
+gem 'rack-cors'
