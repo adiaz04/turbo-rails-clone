@@ -6,4 +6,5 @@
 .idea/
 /spec/dummy/log
 /spec/dummy/tmp
+/spec/dummy/public/assets/
 
