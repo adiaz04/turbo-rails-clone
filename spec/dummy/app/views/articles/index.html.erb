@@ -2,4 +2,6 @@
 
 <%= link_to "New article", new_article_path, data: { turbo: true, turbo_frame: dom_id(Article.new) } %>
 <%= turbo_frame_tag Article.new %>
+<div id="articles">
 <%= render @articles %>
+</div>
