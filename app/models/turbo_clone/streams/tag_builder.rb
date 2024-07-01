@@ -1,16 +1,17 @@
 class TurboClone::Streams::TagBuilder
   def initialize(view_content)
     @view_content = view_content
+    @view_content.formats |= [:html]
   end
 
-  def replace(target, **rendering)
-    action :replace, target, **rendering
+  def replace(target, content = nil, **rendering, &block)
+    action :replace, target, content, **rendering, &block
   end
 
   private
 
-  def action(name, target, **rendering)
-    template = render_template(target, **rendering)
+  def action(name, target, content = nil, **rendering, &block)
+    template = render_template(target, content, **rendering, &block)
     turbo_stream_action_tag(name, target: target, template: template)
   end
 
@@ -31,8 +32,12 @@ class TurboClone::Streams::TagBuilder
     end
   end
 
-  def render_template(target, **rendering)
-    if rendering.any?
+  def render_template(target, content = nil, **rendering, &block)
+    if content
+      content
+    elsif block_given?
+      @view_content.capture(&block)
+    elsif rendering.any?
       @view_content.render(**rendering, formats: :html)
     else
       @view_content.render(partial: target, formats: :html)
