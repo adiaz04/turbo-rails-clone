@@ -42,7 +42,7 @@ class TurboClone::Streams::TagBuilder
 
   def render_template(target, content = nil, **rendering, &block)
     if content
-      content
+      content.respond_to?(:to_partial_path) ? @view_content.render(partial: content, formats: :html) : content
     elsif block_given?
       @view_content.capture(&block)
     elsif rendering.any?
