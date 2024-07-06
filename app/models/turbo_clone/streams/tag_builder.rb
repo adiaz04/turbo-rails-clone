@@ -8,6 +8,14 @@ class TurboClone::Streams::TagBuilder
     action :replace, target, content, **rendering, &block
   end
 
+  def update(target, content = nil, **rendering, &block)
+    action :update, target, content, **rendering, &block
+  end
+
+  def prepend(target, content = nil, **rendering, &block)
+    action :prepend, target, content, **rendering, &block
+  end
+
   private
 
   def action(name, target, content = nil, **rendering, &block)
