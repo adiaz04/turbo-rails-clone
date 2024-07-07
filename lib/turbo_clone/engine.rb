@@ -1,3 +1,4 @@
+require_relative '../../app/helpers/turbo_clone/frames_helper'
 
 module TurboClone
   class Engine < ::Rails::Engine
@@ -8,11 +9,9 @@ module TurboClone
     end
 
     initializer 'turbo_clone.action_controller' do |app|
+      require 'action_controller/base'
       ActiveSupport.on_load :action_controller_base do
-        TurboClone.constants.each do |constant|
-          mod = TurboClone.const_get(constant)
-          helper mod if mod.is_a?(Module) && !mod.is_a?(Class)
-        end
+        helper TurboClone::FramesHelper
       end
     end
   end
