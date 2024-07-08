@@ -8,10 +8,18 @@ module TurboClone
       Mime::Type.register "text/vnd.turbo-stream.html", :turbo_stream
     end
 
-    initializer 'turbo_clone.action_controller' do |app|
-      require 'action_controller/base'
+    initializer "turbo.renderer" do
+      ActiveSupport.on_load :action_controller do
+        ActionController::Renderers.add :turbo_stream do |turbo_streams_html, options|
+          turbo_streams_html
+        end
+      end
+    end
+
+    initializer "turbo.helper" do
       ActiveSupport.on_load :action_controller_base do
-        helper TurboClone::FramesHelper
+        include TurboClone::Streams::TurboStreamsTagBuilder
+        helper TurboClone::Engine.helpers
       end
     end
   end
